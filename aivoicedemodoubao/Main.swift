@@ -1,14 +1,16 @@
 //
-//  ContentView.swift
+//  Main.swift
 //  aivoicedemodoubao
 //
 //  Created by Laoji Zhang on 2025/2/7.
 //
-// ContentView.swift
+
+
+// Main.swift
 import SwiftUI
 
-struct ContentView: View {
-    @State private var isFullScreen = false // 新增状态变量，用于控制悬浮窗是否全屏显示
+struct Main: View {
+    @State private var isFullScreen = false
 
     var body: some View {
         ZStack {
@@ -23,7 +25,7 @@ struct ContentView: View {
             }
             .padding()
 
-            // 新增悬浮窗小图标，点击可切换全屏状态
+            // 悬浮窗小图标
             Image(systemName: "circle.fill")
                 .resizable()
                 .frame(width: 30, height: 30)
@@ -33,11 +35,15 @@ struct ContentView: View {
                 .padding()
                 .zIndex(1)
 
-            // 根据 isFullScreen 状态决定是否显示全屏悬浮窗
             if isFullScreen {
                 FloatingWindow()
-                    .edgesIgnoringSafeArea(.all) // 让悬浮窗内容铺满全屏
             }
         }
+    }
+}
+
+struct Main_Previews: PreviewProvider {
+    static var previews: some View {
+        Main()
     }
 }

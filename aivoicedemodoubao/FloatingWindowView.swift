@@ -5,54 +5,69 @@
 //  Created by Laoji Zhang on 2025/2/7.
 //
 
-
 import SwiftUI
 
-struct FloatingWindowView: View {
-    @Binding var isExpanded: Bool
-    @Binding var showWindow: Bool
-    @Binding var message: String
-    
+struct FloatingWindow: View {
     var body: some View {
-        if showWindow {
-            ZStack {
-                if isExpanded {
-                    // 全屏半透明背景
-                    Color.black.opacity(0.3)
-                        .edgesIgnoringSafeArea(.all)
-                        .onTapGesture {
-                            withAnimation {
-                                isExpanded = false
-                            }
-                        }
-                    
-                    // 全屏展开内容
-                    VStack {
-                        Text(message)
-                            .foregroundColor(.white)
-                            .padding()
-                        
-                        Button("Send Message to Main") {
-                            message = "Message from Floating Window"
-                        }
+        VStack(spacing: 0) {
+            // 顶部的空白间隔，高度为屏幕高度的 1/12，用于避开苹果手机顶部的黑框
+            Spacer()
+                .frame(height: UIScreen.main.bounds.height * (1.0 / 12.0))
+
+            // 最上面的文本框
+            TextField("上面的文本框", text: .constant(""))
+                .padding()
+                .frame(
+                    width: UIScreen.main.bounds.width * 0.9,
+                    height: UIScreen.main.bounds.height * (1.0 / 3.0)
+                )
+                .border(Color.gray, width: 1) // 添加外边框
+                .background(Color.gray.opacity(0.2))
+
+            // 两个文本框之间的空白间隔，高度为屏幕高度的 1/12
+            Spacer()
+                .frame(height: UIScreen.main.bounds.height * (1.0 / 12.0))
+
+            // 中间的文本框
+            TextField("下面的文本框", text: .constant(""))
+                .padding()
+                .frame(
+                    width: UIScreen.main.bounds.width * 0.9,
+                    height: UIScreen.main.bounds.height * (1.0 / 3.0)
+                )
+                .border(Color.gray, width: 1) // 添加外边框
+                .background(Color.gray.opacity(0.2))
+
+            HStack {
+                // 三个按钮，采用苹果常用按钮样式
+                Button(action: {
+                    // 打断按钮的操作
+                }, label: {
+                    Text("打断")
                         .padding()
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.clear)
-                } else {
-                    // 收缩状态下的图标
-                    Image(systemName: "circle.fill")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .foregroundColor(.blue)
-                        .onTapGesture {
-                            withAnimation {
-                                isExpanded = true
-                            }
-                        }
+                })
+                .buttonStyle(.borderedProminent)
+
+                Button(action: {
+                    // 开始按钮的操作
+                }, label: {
+                    Text("开始")
                         .padding()
-                }
+                })
+                .buttonStyle(.borderedProminent)
+
+                Button(action: {
+                    // 返回按钮的操作
+                }, label: {
+                    Text("返回")
+                        .padding()
+                })
+                .buttonStyle(.borderedProminent)
             }
+            .frame(height: UIScreen.main.bounds.height * (1.0 / 6.0))
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity) // 让悬浮窗内容铺满全屏
+        .background(Color.black.opacity(0.5)) // 设置背景颜色为半透明的黑色
     }
 }
+
